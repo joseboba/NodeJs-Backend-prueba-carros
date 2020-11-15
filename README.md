@@ -7,3 +7,7 @@ Es necesario para poder instalar los modulos de node y que el servicio pueda lev
 
 ## `Base de datos`
 Las credenciales son manipulables en el archivo database/config.js
+La base de datos debe de ser creada
+```
+CREATE DATABASE carros
+```
