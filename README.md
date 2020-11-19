@@ -1,4 +1,12 @@
 
+## Rutas Globales
+
+- localhost:4000/car
+- localhost:4000/user
+
+## Rutas con autenticación por Token
+
+
 ## `npm run dev`
 Para levantar el servicio en modo de desarrollo en el puerto 4000
 
@@ -11,3 +19,5 @@ La base de datos debe de ser creada
 ```
 CREATE DATABASE carros
 ```
+
+
