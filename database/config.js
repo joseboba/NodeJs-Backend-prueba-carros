@@ -11,7 +11,7 @@ const sequelize = new Sequelize({
 const connectDB = async() => {
 
     try {
-        await sequelize.sync({ force: false });
+        await sequelize.sync({ alter: false });
         console.log('Conectado')
     } catch (error) {
         console.log(error)

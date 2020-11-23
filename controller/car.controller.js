@@ -57,8 +57,11 @@ const updateCar = async(req = request, res = response) => {
         
         const unique = await Car.findByPk(id);
         if(req.body.placa){
+
             const uniqueV2 = await Car.findOne({ where: { placa: req.body.placa } })
-            if(uniqueV2){
+            console.log(uniqueV2.id);
+            console.log(id)
+            if(uniqueV2.id !== Number(id) ){
                 return res.status(401).json({
                     ok: false,
                     msg: 'No puede repetir el numero de placa'

@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 
 const { Op } = require('sequelize');
 const { User } = require('../models/user.model');
-const { validate } = require('email-validator')
+const  emailValidator  = require('email-validator')
 const { generateJWT } = require('../service/jwt');
 const { request, response } = require('express');
 
@@ -56,25 +56,32 @@ const saveUser = async(req = request, res = response) => {
 const updateUser = async(req = request, res = response) => {
 
     const id = req.params.id;
-    const newUser = { ...req.body };
-    const { email = '', username = '' } = newUser;
+    const { email, username } = req.body;
 
     try {
 
         let user;
 
-        if( (email && validate(email)) || newUser.username ){
+        if( email || username ){
             user = await User.findOne({ where: { [Op.or]: [{ email }, { username }] } })
-            
-            if(user){
+
+            if(user.id !== req.user.id){
                 return res.status(401).json({
                     ok: false,
                     msg: 'Correo o usuario en uso'
                 })
             }
+        
         }
 
-        user = await User.update(newUser, { where: { id } });
+        if(email && !emailValidator.validate(email)){
+            return res.status(401).json({
+                ok: false,
+                msg: 'Correo invalido'
+            })
+        }
+
+        user = await User.update(req.body, { where: { id } });
         return res.status(201).json({
             ok: true,
             user
